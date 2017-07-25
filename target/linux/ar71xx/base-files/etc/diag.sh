@@ -50,6 +50,13 @@ get_status_led() {
 	ap135-020)
 		status_led="ap135:green:status"
 		;;
+	archer-c25-v1|\
+	archer-c58-v1|\
+	archer-c59-v1|\
+	archer-c60-v1|\
+	archer-c7-v4|\
+	fritz300e|\
+	gl-usb150|\
 	mr12|\
 	mr16|\
 	nbg6616|\

@@ -95,8 +95,129 @@ $(Device/tplink)
   IMAGE_SIZE := 15872k
 endef
 
-define Device/cpe510-520
-  DEVICE_TITLE := TP-LINK CPE510/520
+define Device/archer-cxx
+  KERNEL := kernel-bin | patch-cmdline | lzma | uImageArcher lzma
+  IMAGES := sysupgrade.bin factory.bin
+  IMAGE/sysupgrade.bin := append-rootfs | tplink-safeloader sysupgrade | \
+	append-metadata | check-size $$$$(IMAGE_SIZE)
+  IMAGE/factory.bin := append-rootfs | tplink-safeloader factory
+endef
+
+define Device/archer-c25-v1
+  $(Device/archer-cxx)
+  DEVICE_TITLE := TP-LINK Archer C25 v1
+  DEVICE_PACKAGES := kmod-ath10k ath10k-firmware-qca9887
+  BOARDNAME := ARCHER-C25-V1
+  TPLINK_BOARD_ID := ARCHER-C25-V1
+  DEVICE_PROFILE := ARCHERC25V1
+  IMAGE_SIZE := 7808k
+  LOADER_TYPE := elf
+  MTDPARTS := spi0.0:128k(factory-uboot)ro,64k(u-boot)ro,1536k(kernel),6272k(rootfs),128k(config)ro,64k(art)ro,7808k@0x30000(firmware)
+  SUPPORTED_DEVICES := archer-c25-v1
+endef
+
+define Device/archer-c58-v1
+  $(Device/archer-cxx)
+  DEVICE_TITLE := TP-LINK Archer C58 v1
+  DEVICE_PACKAGES := kmod-ath10k
+  BOARDNAME := ARCHER-C58-V1
+  TPLINK_BOARD_ID := ARCHER-C58-V1
+  DEVICE_PROFILE := ARCHERC58V1
+  IMAGE_SIZE := 7936k
+  MTDPARTS := spi0.0:64k(u-boot)ro,64k(mac)ro,1344k(kernel),6592k(rootfs),64k(tplink)ro,64k(art)ro,7936k@0x20000(firmware)
+  SUPPORTED_DEVICES := archer-c58-v1
+endef
+
+define Device/archer-c59-v1
+  $(Device/archer-cxx)
+  DEVICE_TITLE := TP-LINK Archer C59 v1
+  DEVICE_PACKAGES := kmod-usb-core kmod-usb2 kmod-usb-ledtrig-usbport kmod-ath10k ath10k-firmware-qca988x
+  BOARDNAME := ARCHER-C59-V1
+  TPLINK_BOARD_ID := ARCHER-C59-V1
+  DEVICE_PROFILE := ARCHERC59V1
+  IMAGE_SIZE := 14528k
+  MTDPARTS := spi0.0:64k(u-boot)ro,64k(mac)ro,1536k(kernel),12992k(rootfs),1664k(tplink)ro,64k(art)ro,14528k@0x20000(firmware)
+  SUPPORTED_DEVICES := archer-c59-v1
+endef
+
+define Device/archer-c60-v1
+  $(Device/archer-cxx)
+  DEVICE_TITLE := TP-LINK Archer C60 v1
+  DEVICE_PACKAGES := kmod-ath10k ath10k-firmware-qca988x
+  BOARDNAME := ARCHER-C60-V1
+  TPLINK_BOARD_ID := ARCHER-C60-V1
+  DEVICE_PROFILE := ARCHERC60V1
+  IMAGE_SIZE := 7936k
+  MTDPARTS := spi0.0:64k(u-boot)ro,64k(mac)ro,1344k(kernel),6592k(rootfs),64k(tplink)ro,64k(art)ro,7936k@0x20000(firmware)
+  SUPPORTED_DEVICES := archer-c60-v1
+endef
+TARGET_DEVICES += archer-c25-v1 archer-c58-v1 archer-c59-v1 archer-c60-v1
+
+define Device/archer-c5-v1
+  $(Device/tplink-16mlzma)
+  DEVICE_TITLE := TP-LINK Archer C5 v1
+  DEVICE_PACKAGES := kmod-usb-core kmod-usb2 kmod-usb-ledtrig-usbport kmod-ath10k ath10k-firmware-qca988x
+  BOARDNAME := ARCHER-C5
+  DEVICE_PROFILE := ARCHERC7
+  TPLINK_HWID := 0xc5000001
+endef
+
+define Device/archer-c7-v1
+  $(Device/tplink-8mlzma)
+  DEVICE_TITLE := TP-LINK Archer C7 v1
+  DEVICE_PACKAGES := kmod-usb-core kmod-usb2 kmod-usb-ledtrig-usbport kmod-ath10k ath10k-firmware-qca988x
+  BOARDNAME := ARCHER-C7
+  DEVICE_PROFILE := ARCHERC7
+  TPLINK_HWID := 0x75000001
+endef
+
+define Device/archer-c7-v2
+  $(Device/tplink-16mlzma)
+  DEVICE_TITLE := TP-LINK Archer C7 v2
+  DEVICE_PACKAGES := kmod-usb-core kmod-usb2 kmod-usb-ledtrig-usbport kmod-ath10k ath10k-firmware-qca988x
+  BOARDNAME := ARCHER-C7-V2
+  DEVICE_PROFILE := ARCHERC7
+  TPLINK_HWID := 0xc7000002
+  IMAGES := sysupgrade.bin factory.bin factory-us.bin factory-eu.bin
+  IMAGE/factory-us.bin := append-rootfs | mktplinkfw factory -C US
+  IMAGE/factory-eu.bin := append-rootfs | mktplinkfw factory -C EU
+endef
+
+define Device/archer-c7-v2-il
+  $(Device/tplink-16mlzma)
+  DEVICE_TITLE := TP-LINK Archer C7 v2 (IL)
+  DEVICE_PACKAGES := kmod-usb-core kmod-usb2 kmod-usb-ledtrig-usbport kmod-ath10k ath10k-firmware-qca988x
+  BOARDNAME := ARCHER-C7-V2
+  DEVICE_PROFILE := ARCHERC7
+  TPLINK_HWID := 0xc7000002
+  TPLINK_HWREV := 0x494c0001
+endef
+
+define Device/tl-wdr7500-v3
+  $(Device/tplink-8mlzma)
+  DEVICE_TITLE := TP-LINK Archer C7 v3
+  DEVICE_PACKAGES := kmod-usb-core kmod-usb2 kmod-usb-ledtrig-usbport kmod-ath10k ath10k-firmware-qca988x
+  BOARDNAME := ARCHER-C7
+  DEVICE_PROFILE := ARCHERC7
+  TPLINK_HWID := 0x75000003
+endef
+
+define Device/archer-c7-v4
+  $(Device/archer-cxx)
+  DEVICE_TITLE := TP-LINK Archer C7 v4
+  DEVICE_PACKAGES := kmod-ath10k ath10k-firmware-qca988x
+  BOARDNAME := ARCHER-C7-V4
+  TPLINK_BOARD_ID := ARCHER-C7-V4
+  IMAGE_SIZE := 15104k
+  LOADER_TYPE := elf
+  MTDPARTS := spi0.0:128k(factory-uboot)ro,128k(u-boot)ro,1536k(kernel),13568k(rootfs),960k(config)ro,64k(art)ro,15104k@0x40000(firmware)
+  SUPPORTED_DEVICES := archer-c7-v4
+endef
+
+TARGET_DEVICES += archer-c5-v1 archer-c7-v1 archer-c7-v2 archer-c7-v2-il tl-wdr7500-v3 archer-c7-v4
+
+define Device/cpe510-520-v1
+  DEVICE_TITLE := TP-LINK CPE510/520 v1
   DEVICE_PACKAGES := rssileds
   MTDPARTS := spi0.0:128k(u-boot)ro,64k(pation-table)ro,64k(product-info)ro,1536k(kernel),6144k(rootfs),192k(config)ro,64k(ART)ro,7680k@0x40000(firmware)
   IMAGE_SIZE := 7680k
