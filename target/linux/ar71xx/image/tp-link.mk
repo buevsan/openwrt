@@ -21,6 +21,14 @@ define Build/mktplinkfw
 		$(if $(findstring sysupgrade,$(word 1,$(1))),-s) && mv $@.new $@ || rm -f $@
 endef
 
+define Build/uImageArcher
+	mkimage -A $(LINUX_KARCH) \
+		-O linux -T kernel \
+		-C $(1) -a $(KERNEL_LOADADDR) -e $(if $(KERNEL_ENTRY),$(KERNEL_ENTRY),$(KERNEL_LOADADDR)) \
+		-n '$(call toupper,$(LINUX_KARCH)) LEDE Linux-$(LINUX_VERSION)' -d $@ $@.new
+	@mv $@.new $@
+endef
+
 # mktplinkfw-combined
 #
 # -c combined image

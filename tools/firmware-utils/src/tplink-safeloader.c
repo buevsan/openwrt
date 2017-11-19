@@ -831,6 +831,16 @@ static void * generate_sysupgrade_image(const struct device_info *info, const st
 	return image;
 }
 
+/** Creates a new image partition from arbitrary data */
+static struct image_partition_entry put_data(const char *part_name, const char *datain, size_t len) {
+
+	struct image_partition_entry entry = alloc_image_partition(part_name, len);
+
+	memcpy(entry.data, datain, len);
+
+	return entry;
+}
+
 /** Generates an image according to a given layout and writes it to a file */
 static void build_image(const char *output,
 		const char *kernel_image,
