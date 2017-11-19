@@ -116,7 +116,7 @@ define Device/archer-c25-v1
   DEVICE_TITLE := TP-LINK Archer C25 v1
   DEVICE_PACKAGES := kmod-ath10k ath10k-firmware-qca9887
   BOARDNAME := ARCHER-C25-V1
-  TPLINK_BOARD_ID := ARCHER-C25-V1
+  TPLINK_BOARD_NAME := ARCHER-C25-V1
   DEVICE_PROFILE := ARCHERC25V1
   IMAGE_SIZE := 7808k
   LOADER_TYPE := elf
@@ -129,7 +129,7 @@ define Device/archer-c58-v1
   DEVICE_TITLE := TP-LINK Archer C58 v1
   DEVICE_PACKAGES := kmod-ath10k
   BOARDNAME := ARCHER-C58-V1
-  TPLINK_BOARD_ID := ARCHER-C58-V1
+  TPLINK_BOARD_NAME := ARCHER-C58-V1
   DEVICE_PROFILE := ARCHERC58V1
   IMAGE_SIZE := 7936k
   MTDPARTS := spi0.0:64k(u-boot)ro,64k(mac)ro,1344k(kernel),6592k(rootfs),64k(tplink)ro,64k(art)ro,7936k@0x20000(firmware)
@@ -141,7 +141,7 @@ define Device/archer-c59-v1
   DEVICE_TITLE := TP-LINK Archer C59 v1
   DEVICE_PACKAGES := kmod-usb-core kmod-usb2 kmod-usb-ledtrig-usbport kmod-ath10k ath10k-firmware-qca988x
   BOARDNAME := ARCHER-C59-V1
-  TPLINK_BOARD_ID := ARCHER-C59-V1
+  TPLINK_BOARD_NAME := ARCHER-C59-V1
   DEVICE_PROFILE := ARCHERC59V1
   IMAGE_SIZE := 14528k
   MTDPARTS := spi0.0:64k(u-boot)ro,64k(mac)ro,1536k(kernel),12992k(rootfs),1664k(tplink)ro,64k(art)ro,14528k@0x20000(firmware)
@@ -153,7 +153,7 @@ define Device/archer-c60-v1
   DEVICE_TITLE := TP-LINK Archer C60 v1
   DEVICE_PACKAGES := kmod-ath10k ath10k-firmware-qca988x
   BOARDNAME := ARCHER-C60-V1
-  TPLINK_BOARD_ID := ARCHER-C60-V1
+  TPLINK_BOARD_NAME := ARCHER-C60-V1
   DEVICE_PROFILE := ARCHERC60V1
   IMAGE_SIZE := 7936k
   MTDPARTS := spi0.0:64k(u-boot)ro,64k(mac)ro,1344k(kernel),6592k(rootfs),64k(tplink)ro,64k(art)ro,7936k@0x20000(firmware)
@@ -215,7 +215,7 @@ define Device/archer-c7-v4
   DEVICE_TITLE := TP-LINK Archer C7 v4
   DEVICE_PACKAGES := kmod-ath10k ath10k-firmware-qca988x
   BOARDNAME := ARCHER-C7-V4
-  TPLINK_BOARD_ID := ARCHER-C7-V4
+  TPLINK_BOARD_NAME := ARCHER-C7-V4
   IMAGE_SIZE := 15104k
   LOADER_TYPE := elf
   MTDPARTS := spi0.0:128k(factory-uboot)ro,128k(u-boot)ro,1536k(kernel),13568k(rootfs),960k(config)ro,64k(art)ro,15104k@0x40000(firmware)
