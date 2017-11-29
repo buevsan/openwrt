@@ -106,6 +106,8 @@ $(eval $(call nf_add,IPT_FILTER,CONFIG_NETFILTER_XT_MATCH_STRING, $(P_XT)xt_stri
 $(eval $(call nf_add,IPT_IPOPT,CONFIG_NETFILTER_XT_MATCH_DSCP, $(P_XT)xt_dscp))
 $(eval $(call nf_add,IPT_IPOPT,CONFIG_NETFILTER_XT_TARGET_DSCP, $(P_XT)xt_DSCP))
 $(eval $(call nf_add,IPT_HASHLIMIT,CONFIG_NETFILTER_XT_MATCH_HASHLIMIT, $(P_XT)xt_hashlimit))
+$(eval $(call nf_add,IPT_RPFILTER,CONFIG_IP_NF_MATCH_RPFILTER, $(P_V4)ipt_rpfilter))
+$(eval $(call nf_add,IPT_RPFILTER,CONFIG_IP6_NF_MATCH_RPFILTER, $(P_V6)ip6t_rpfilter))
 $(eval $(call nf_add,IPT_IPOPT,CONFIG_NETFILTER_XT_MATCH_LENGTH, $(P_XT)xt_length))
 $(eval $(call nf_add,IPT_IPOPT,CONFIG_NETFILTER_XT_MATCH_STATISTIC, $(P_XT)xt_statistic))
 $(eval $(call nf_add,IPT_IPOPT,CONFIG_NETFILTER_XT_MATCH_TCPMSS, $(P_XT)xt_tcpmss))
@@ -260,6 +262,10 @@ $(eval $(if $(NF_KMOD),$(call nf_add,IPT_TEE,CONFIG_NF_DUP_IPV6, $(P_V6)nf_dup_i
 
 $(eval $(call nf_add,IPT_U32,CONFIG_NETFILTER_XT_MATCH_U32, $(P_XT)xt_u32))
 
+# checksum
+
+$(eval $(call nf_add,IPT_CHECKSUM,CONFIG_NETFILTER_XT_TARGET_CHECKSUM, $(P_XT)xt_CHECKSUM))
+
 
 # netlink
 
@@ -314,9 +320,12 @@ $(eval $(if $(NF_KMOD),$(call nf_add,NFT_CORE,CONFIG_NF_TABLES, $(P_XT)nf_tables
 $(eval $(if $(NF_KMOD),$(call nf_add,NFT_CORE,CONFIG_NF_TABLES_INET, $(P_XT)nf_tables_inet),))
 $(eval $(if $(NF_KMOD),$(call nf_add,NFT_CORE,CONFIG_NFT_EXTHDR, $(P_XT)nft_exthdr),))
 $(eval $(if $(NF_KMOD),$(call nf_add,NFT_CORE,CONFIG_NFT_META, $(P_XT)nft_meta),))
+$(eval $(if $(NF_KMOD),$(call nf_add,NFT_CORE,CONFIG_NFT_NUMGEN, $(P_XT)nft_numgen, ge 4.9.0),))
 $(eval $(if $(NF_KMOD),$(call nf_add,NFT_CORE,CONFIG_NFT_CT, $(P_XT)nft_ct),))
-$(eval $(if $(NF_KMOD),$(call nf_add,NFT_CORE,CONFIG_NFT_RBTREE, $(P_XT)nft_rbtree),))
-$(eval $(if $(NF_KMOD),$(call nf_add,NFT_CORE,CONFIG_NFT_HASH, $(P_XT)nft_hash),))
+$(eval $(if $(NF_KMOD),$(call nf_add,NFT_CORE,CONFIG_NFT_SET_RBTREE, $(P_XT)nft_set_rbtree, ge 4.9.0),))
+$(eval $(if $(NF_KMOD),$(call nf_add,NFT_CORE,CONFIG_NFT_RBTREE, $(P_XT)nft_rbtree, lt 4.9.0),))
+$(eval $(if $(NF_KMOD),$(call nf_add,NFT_CORE,CONFIG_NFT_SET_HASH, $(P_XT)nft_set_hash, ge 4.9.0),))
+$(eval $(if $(NF_KMOD),$(call nf_add,NFT_CORE,CONFIG_NFT_HASH, $(P_XT)nft_hash, lt 4.9.0),))
 $(eval $(if $(NF_KMOD),$(call nf_add,NFT_CORE,CONFIG_NFT_COUNTER, $(P_XT)nft_counter),))
 $(eval $(if $(NF_KMOD),$(call nf_add,NFT_CORE,CONFIG_NFT_LOG, $(P_XT)nft_log),))
 $(eval $(if $(NF_KMOD),$(call nf_add,NFT_CORE,CONFIG_NFT_LIMIT, $(P_XT)nft_limit),))
@@ -327,6 +336,7 @@ $(eval $(if $(NF_KMOD),$(call nf_add,NFT_CORE,CONFIG_NFT_CHAIN_ROUTE_IPV4, $(P_V
 $(eval $(if $(NF_KMOD),$(call nf_add,NFT_CORE,CONFIG_NF_TABLES_IPV6, $(P_V6)nf_tables_ipv6),))
 $(eval $(if $(NF_KMOD),$(call nf_add,NFT_CORE,CONFIG_NFT_CHAIN_ROUTE_IPV6, $(P_V6)nft_chain_route_ipv6),))
 $(eval $(if $(NF_KMOD),$(call nf_add,NFT_CORE,CONFIG_NFT_REDIR, $(P_XT)nft_redir, ge 3.19.0),))
+$(eval $(if $(NF_KMOD),$(call nf_add,NFT_CORE,CONFIG_NFT_QUOTA, $(P_XT)nft_quota, ge 4.9.0),))
 
 $(eval $(if $(NF_KMOD),$(call nf_add,NFT_NAT,CONFIG_NFT_NAT, $(P_XT)nft_nat),))
 $(eval $(if $(NF_KMOD),$(call nf_add,NFT_NAT,CONFIG_NFT_CHAIN_NAT_IPV4, $(P_V4)nft_chain_nat_ipv4),))
@@ -360,7 +370,6 @@ IPT_BUILTIN += $(IPT_NAT_EXTRA-y)
 IPT_BUILTIN += $(NF_NATHELPER-y)
 IPT_BUILTIN += $(NF_NATHELPER_EXTRA-y)
 IPT_BUILTIN += $(IPT_ULOG-y)
-IPT_BUILTIN += $(IPT_DEBUG-y)
 IPT_BUILTIN += $(IPT_TPROXY-y)
 IPT_BUILTIN += $(NFNETLINK-y)
 IPT_BUILTIN += $(NFNETLINK_LOG-y)
