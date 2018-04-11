@@ -1,0 +1,13 @@
+--- a/drivers/net/wireless/ath/ath10k/core.c_	2018-04-11 11:22:39.134166558 +0300
++++ b/drivers/net/wireless/ath/ath10k/core.c	2018-04-11 11:27:43.393379179 +0300
+@@ -1489,6 +1489,10 @@
+ 	ath10k_fetch_cal_file(ar);
+ 
+ 	for (i = ATH10K_FW_API_MAX; i >= ATH10K_FW_API_MIN; i--) {
++
++    if ((ar->hw_params.id != QCA6174_HW_3_0_VERSION) && (i == ATH10K_FW_API_MAX))
++      continue;
++
+ 		ar->fw_api = i;
+ 		ath10k_dbg(ar, ATH10K_DBG_BOOT, "trying fw api %d\n",
+ 			   ar->fw_api);
