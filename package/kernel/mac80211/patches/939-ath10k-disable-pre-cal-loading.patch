@@ -1,0 +1,19 @@
+--- a/drivers/net/wireless/ath/ath10k/core.c_	2018-04-11 13:31:40.920181628 +0300
++++ b/drivers/net/wireless/ath/ath10k/core.c	2018-04-11 13:36:21.975542312 +0300
+@@ -988,13 +988,15 @@
+ {
+ 	char filename[100];
+ 
+-	/* pre-cal-<bus>-<id>.bin */
++#if 0
++	/* pre-cal-<bus>-<id>.bin */  
+ 	scnprintf(filename, sizeof(filename), "pre-cal-%s-%s.bin",
+ 		  ath10k_bus_str(ar->hif.bus), dev_name(ar->dev));
+ 
+ 	ar->pre_cal_file = ath10k_fetch_fw_file(ar, ATH10K_FW_DIR, filename);
+ 	if (!IS_ERR(ar->pre_cal_file))
+ 		goto success;
++#endif
+ 
+ 	/* cal-<bus>-<id>.bin */
+ 	scnprintf(filename, sizeof(filename), "cal-%s-%s.bin",
