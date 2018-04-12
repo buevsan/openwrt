@@ -1,0 +1,17 @@
+#!/bin/sh
+
+[ "${ACTION}" = "released" ] || exit 0
+
+logger LIGHTS pressed
+
+LEDSOFF="/var/run/leds_off"
+
+if [ -f "${LEDSOFF}" ] ; then
+  /etc/init.d/led start 
+  rm "${LEDSOFF}"  
+else
+  /etc/init.d/led stop 
+  touch "${LEDSOFF}"
+fi
+
+return 0
