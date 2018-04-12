@@ -31,6 +31,13 @@ load_led() {
 	config_get gpio $1 gpio "0"
 	config_get inverted $1 inverted "0"
 
+	if [ -n "$2" ]; then
+          trigger="$2"
+	  if [ "$2" = "none" ]; then
+            default=0
+	  fi
+	fi
+
 	if [ "$trigger" = "rssi" ]; then
 		# handled by rssileds userspace process
 		return
@@ -132,3 +139,12 @@ start() {
 		config_foreach load_led led
 	}
 }
+
+stop() {                                
+        [ -e /sys/class/leds/ ] && {                                                             
+                config_load system                   
+                config_foreach load_led led none                                                           
+        }                                         
+}          
+
+
