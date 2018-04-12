@@ -13,7 +13,7 @@ board=$(ipq806x_board_name)
 
 case "$board" in
 	c2600)
-		echo $(macaddr_add $(mtd_get_mac_binary default-mac 8)  $(($PHYNBR - 1)) ) > /sys${DEVPATH}/macaddress
+		echo $(macaddr_add $(mtd_get_mac_binary default-mac 8)  $(($PHYNBR + 1)) ) > /sys${DEVPATH}/macaddress
 		;;
 	d7800 |\
 	r7500v2 |\
