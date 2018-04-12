@@ -1,0 +1,37 @@
+#!/bin/sh /etc/rc.common
+
+START=15
+
+boot()  {
+
+  . /lib/ipq806x.sh
+  . /lib/functions/system.sh
+  . /lib/functions.sh
+
+  board=$(ipq806x_board_name)
+
+  case "$board" in
+
+     c2600)
+
+	    DEVPATH="/sys/class/ieee80211/phy"      
+      P0="${DEVPATH}0/macaddress"
+      P1="${DEVPATH}1/macaddress"
+      MAC="$(mtd_get_mac_binary default-mac 8)"
+      if [ -f "${P0}" ]; then
+  	    echo $(macaddr_add ${MAC}  1 ) > ${P0}
+	      logger WLAN0 MAC address: $(macaddr_add ${MAC}  1 )
+      fi  
+      if [ -f "${P1}" ]; then
+  	    echo $(macaddr_add ${MAC}  2 ) > ${P1}
+        logger WLAN1 MAC address: $(macaddr_add ${MAC}  2 )
+      fi          
+		;;
+
+	*)
+		;;
+  esac
+
+}
+
+
