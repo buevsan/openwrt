@@ -4,15 +4,14 @@ START=15
 
 boot()  {
 
-  . /lib/ipq806x.sh
   . /lib/functions/system.sh
   . /lib/functions.sh
 
-  board=$(ipq806x_board_name)
+  board=$(board_name)
 
   case "$board" in
 
-     c2600)
+     tplink,c2600)
 
 	    DEVPATH="/sys/class/ieee80211/phy"      
       P0="${DEVPATH}0/macaddress"
