@@ -48,6 +48,13 @@ linksys,venom)
 	ucidef_set_led_usbport "usb2_ss" "USB 2 SS" "pca963x:venom:blue:usb3_2" "usb3-port1"
 	;;
 
+cznic,turris-omnia)
+  ucidef_set_led_default "power" "POWER" "omnia-led:power" "1"
+  ucidef_set_led_netdev "wan" "WAN" "omnia-led:wan" "eth2"
+  ucidef_set_led_default "user1" "A" "omnia-led:user1" "0"
+  ucidef_set_led_default "user2" "B" "omnia-led:user2" "0"
+  ;;
+
 esac
 
 board_config_flush

@@ -7,6 +7,9 @@
 
 get_status_led() {
 	case $(board_name) in
+	cznic,turris-omnia)
+		status_led="omnia-led:power"
+		;;
 	linksys,caiman)
 		status_led="caiman:white:power"
 		;;
