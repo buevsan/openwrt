@@ -24,7 +24,10 @@ platform_do_upgrade() {
 	linksys,caiman|linksys,cobra|linksys,mamba|linksys,rango|linksys,shelby|linksys,venom)
 		platform_do_upgrade_linksys "$1"
 		;;
-	cznic,turris-omnia|globalscale,espressobin|globalscale,espressobin-emmc|globalscale,espressobin-v7|globalscale,espressobin-v7-emmc|\
+  cznic,turris-omnia)
+  	platform_do_upgrade_turris_omnia "$1"
+  	;;
+	globalscale,espressobin|globalscale,espressobin-emmc|globalscale,espressobin-v7|globalscale,espressobin-v7-emmc|\
 	marvell,armada8040-mcbin|solidrun,clearfog-base-a1|solidrun,clearfog-pro-a1)
 		platform_do_upgrade_sdcard "$1"
 		;;
@@ -43,4 +46,14 @@ platform_copy_config() {
 		platform_copy_config_sdcard
 		;;
 	esac
+}
+
+platform_do_upgrade_turris_omnia() {
+	platform_do_upgrade_sdcard "$1" || return 1
+	grep -q 'U-Boot 2015.10-rc2' /dev/mtd0 || return 0
+
+	fw_setenv -s - <<-"EOF"
+   mmcboot load mmc 0:1 0x2010000 boot.scr && source 0x2010000 
+	EOF
+	sleep 1
 }

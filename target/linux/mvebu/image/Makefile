@@ -61,8 +61,10 @@ define Build/omnia-medkit-initramfs
 	$(TAR) -c -T /dev/null -f $@
 	rm -rf $(dir $(IMAGE_KERNEL))boot
 	mkdir -p $(dir $(IMAGE_KERNEL))boot/boot/
-	cp $(KDIR)/zImage-initramfs $(dir $(IMAGE_KERNEL))boot/boot/zImage
-	cp $(KDIR)/image-$(firstword $(DEVICE_DTS)).dtb $(dir $(IMAGE_KERNEL))boot/boot/dtb
+	cp $@-boot.scr $(dir $(IMAGE_KERNEL))boot/boot.scr
+	cp $(KDIR)/zImage-initramfs $(dir $(IMAGE_KERNEL))boot/zImage
+	$(foreach dts,$(DEVICE_DTS), cp $(KDIR)/image-$(dts).dtb $(dir $(IMAGE_KERNEL))boot/$(dts).dtb;)
+	(cd $(dir $(IMAGE_KERNEL))boot/boot; ln -s ../$(firstword $(DEVICE_DTS)).dtb dtb; ln -s ../zImage .)
 	$(TAR) -rp --numeric-owner --owner=0 --group=0 --sort=name \
 		$(if $(SOURCE_DATE_EPOCH),--mtime="@$(SOURCE_DATE_EPOCH)") \
 		--file=$@ -C $(dir $(IMAGE_KERNEL))boot/ .
